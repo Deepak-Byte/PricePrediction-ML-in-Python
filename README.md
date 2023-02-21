@@ -1,2 +1,65 @@
 # PricePrediction-ML-in-Python
 Using basis of machine learning build model to predict price of stocks
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.utils import shuffle
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.tree import DecisionTreeRegressor
+
+
+if __name__ == "__main__":
+    Data = pd.read_csv(f"E:\BANKNIFTYDATA.csv")
+    Banknifty = Data.dropna()                                               # Remove all null value data
+    plt.figure(figsize=(14, 6))                                             # Close price vs number of days chart
+    plt.title('Bank Nifty')
+    plt.xlabel('Days')
+    plt.ylabel('Close Price INR')
+    plt.plot(Banknifty['Close'])
+    plt.show()
+
+    Newdataframe = Banknifty[['Close']].copy()                                # Taking out Close price data separately
+    Future_days = 30                                                          # For future days prediction
+    Newdataframe['Prediction'] = Newdataframe[['Close']].shift(-Future_days)  # Getting last 30 days data for prediction
+    print(Newdataframe)
+    x = np.array(Newdataframe.drop(['Prediction'], 1))[:-Future_days]         # Contain All data:-30
+    y = np.array(Newdataframe['Prediction'])[:-Future_days]                   # Contain      -30:All data
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+    tree = DecisionTreeRegressor().fit(x_train, y_train)                      # Tree decision model
+    lrn = LinearRegression().fit(x_train, y_train)                            # Linear decision model
+    x_future = Newdataframe.drop(['Prediction'], 1)[:-Future_days]
+    x_future = x_future.tail(Future_days)
+    x_future = np.array(x_future)
+    tree_predict = tree.predict(x_future)
+    print(tree_predict)  # Checking for 30 prediction
+    print()
+    lrn_predict = lrn.predict(x_future)
+    print(lrn_predict)  # Checking for 30 prediction
+
+    # Tree Regression model prediction
+    prediction = tree_predict
+    valid = Newdataframe[x.shape[0]:]
+    valid['Prediction'] = prediction
+    plt.figure(figsize=(14, 6))
+    plt.title('Model')
+    plt.xlabel('Days')
+    plt.ylabel('Close Price INR')
+    plt.plot(Newdataframe['Close'])
+    plt.plot(valid[['Close', 'Prediction']])
+    plt.legend(['Original data', 'Valida data', 'Predicted data'])
+    plt.show()
+
+    # Linear Regression model prediction
+    prediction = lrn_predict
+    valid = Newdataframe[x.shape[0]:]
+    valid['Prediction'] = prediction
+    plt.figure(figsize=(14, 6))
+    plt.title('Model')
+    plt.xlabel('Days')
+    plt.ylabel('Close Price INR')
+    plt.plot(Newdataframe['Close'])
+    plt.plot(valid[['Close', 'Prediction']])
+    plt.legend(['Original data', 'Valida data', 'Predicted data'])
+    plt.show()
+
