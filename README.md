@@ -13,13 +13,22 @@ SKLearn library used for building ML model, train test spliting.
 
 Step wise complete project describtion,
 Step 1- Creating main in program and trasported data into program using pandas library.
+
 Step 2- Checking null data and removing it.
-Step 2- Ploted chart of number of days vs close price.
-Step 2- Make new data frame of close price and then created feature data frame and target data frame.
-Step 2- Preapared train and test set data using SKLearn library.
-Step 2- Preapared ML model, used two different model for more perfection namely TreeRegression and LinearRegression.
-Step 2- Train our model using x-train and x-test data set.
-Step 2- Then ploted our predicted value from our trained data set using both model and analysing the data and cheking different model accuracy predction.
+
+Step 3- Ploted chart of number of days vs close price.
+
+Step 4- Make new data frame of close price and then created feature data frame and target data frame.
+
+Step 5- Preapared train and test set data using SKLearn library.
+
+Step 6- Preapared ML model, used two different model for more perfection namely TreeRegression and LinearRegression.
+
+Step 7- Train our model using x-train and x-test data set.
+
+Step 8- Then ploted our predicted value from our trained data set using both model and analysing the data and cheking different model accuracy predction.
+
+
 
 In my case Linear model predicted more accurate result as compare to Tree model.
 All file and chart are present to this git reposatory.
